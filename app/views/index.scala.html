@@ -1,0 +1,16 @@
+@(title: String)
+
+@main(title) {
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+<div id="container">
+  <h1 id="page-title">Welcome to TubeLytics</h1>
+  <div id="search-bar">
+    <input type="text" id="searchQuery" placeholder="Enter search terms">
+    <button onclick="search()">Go!</button>
+  </div>
+  <div id="results"></div> <!-- Results container where search results will appear -->
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+}

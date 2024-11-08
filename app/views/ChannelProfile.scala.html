@@ -1,0 +1,45 @@
+@(channelProfile: com.fasterxml.jackson.databind.JsonNode, videos: java.util.List[com.fasterxml.jackson.databind.JsonNode])
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>@channelProfile.path("snippet").path("title").asText("Channel Title")</title>
+        <style>
+                body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; }
+                h1 { color: #333; }
+                .video-list { list-style: none; padding: 0; }
+                .video-item { margin-bottom: 20px; display: flex; align-items: center; }
+                .video-thumbnail { margin-right: 15px; }
+                .video-thumbnail img { width: 120px; height: 90px; }
+        </style>
+    </head>
+    <body>
+        <h1>@channelProfile.path("snippet").path("title").asText("Channel Title")</h1>
+        <p><strong>Description:</strong> @channelProfile.path("snippet").path("description").asText("No Description Available")</p>
+        <p><strong>Subscribers:</strong> @channelProfile.path("statistics").path("subscriberCount").asText("N/A")</p>
+        <p><strong>Channel Creation Date:</strong> @channelProfile.path("snippet").path("publishedAt").asText("N/A")</p>
+        <p><strong>Total Videos:</strong> @channelProfile.path("statistics").path("videoCount").asText("N/A")</p>
+        <p><strong>Total Views:</strong> @channelProfile.path("statistics").path("viewCount").asText("N/A")</p>
+
+        <h2>Latest Videos</h2>
+        <ul class="video-list">
+        @for((video, index) <- videos.zipWithIndex) {
+            <li class="video-item">
+                <div class="video-thumbnail">
+                    <img src="@video.path("snippet").path("thumbnails").path("default").path("url").asText("Thumbnail Not Available")" alt="Thumbnail">
+                </div>
+                <div class="video-details">
+                    <p>
+                        <strong>@(index + 1). Title:</strong>
+                        <a href="https://www.youtube.com/watch?v=@{video.path("videoId").asText("N/A")}" target="_blank">
+                        @video.path("snippet").path("title").asText("Untitled Video")
+                        </a>
+                    </p>
+                    <p><strong>Published At:</strong> @video.path("snippet").path("publishedAt").asText("N/A")</p>
+                    <p><strong>Description:</strong> @video.path("snippet").path("description").asText("No Description Available")</p>
+                </div>
+            </li>
+        }
+        </ul>
+    </body>
+</html>
